@@ -1,0 +1,36 @@
+NAME="gtkwave"
+VERSION=3.3.52
+RELEASE=1
+CATEGORY="Science"
+SUMMARY="A wave viewer for LXT, LXT2, VZT, FST, GHW and standard Verilog VCD/EVCD"
+DESCRIPTION="GTKWave is a fully featured GTK+ based wave viewer for Unix, Win32, 
+and Mac OSX which reads LXT, LXT2, VZT, FST, and GHW files as well as standard 
+Verilog VCD/EVCD files and allows their viewing."
+HOMEPAGE="http://gtkwave.sourceforge.net/"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
+
+PKG_NAMES="gtkwave"
+gtkwave_SUMMARY="GTK+ based wave viewer"
+gtkwave_CONTENTS="
+	usr/bin/
+	usr/share/
+	etc/"
+
+src_compile() {
+	cd ${S}
+	cygconf                    \
+		--disable-mime-update  \
+		--enable-struct-pack   \
+		--disable-local-libz   \
+		--disable-local-libbz2 \
+		--enable-xz            \
+		--enable-fasttree      \
+		--enable-judy          \
+		--enable-largefile
+	cygmake
+}
+
+src_install() {
+	cyginstall
+	dodoc ANALOG_README.TXT ChangeLog README SYSTEMVERILOG_README.TXT
+}
